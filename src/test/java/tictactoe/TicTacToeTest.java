@@ -122,4 +122,82 @@ public class TicTacToeTest {
         assertThat(ticTacToe.play(3, 3)).isEqualTo(PlayResult.WINNER); // X is the WINNER
     }
 
+    @Test
+    public void givenOHasPlayedFromTopLeftToBottomRight_whenPlay_thenPlayerOIsTheWinner() {
+        ticTacToe.play(1, 2); // X
+        ticTacToe.play(1, 1); // O
+        ticTacToe.play(2, 1); // X
+        ticTacToe.play(2, 2); // O
+        ticTacToe.play(3, 2); // X
+
+        assertThat(ticTacToe.play(3, 3)).isEqualTo(PlayResult.WINNER); // O is the WINNER
+    }
+
+    @Test
+    public void givenXHasPlayedFromBottomLeftToTopRight_whenPlay_thenPlayerXIsTheWinner() {
+        ticTacToe.play(1, 3); // X
+        ticTacToe.play(1, 1); // O
+        ticTacToe.play(2, 2); // X
+        ticTacToe.play(2, 1); // O
+
+        assertThat(ticTacToe.play(3, 1)).isEqualTo(PlayResult.WINNER); // X is the WINNER
+    }
+
+    @Test
+    public void givenOHasPlayedFromBottomLeftToTopRight_whenPlay_thenPlayerOIsTheWinner() {
+        ticTacToe.play(1, 1); // X
+        ticTacToe.play(1, 3); // O
+        ticTacToe.play(2, 1); // X
+        ticTacToe.play(2, 2); // O
+        ticTacToe.play(3, 2); // X
+
+        assertThat(ticTacToe.play(3, 1)).isEqualTo(PlayResult.WINNER); // O is the WINNER
+    }
+
+    @Test
+    public void givenAllSpotsAreFilled_whenPlay_thenTheResultIsDraw() {
+        ticTacToe.play(1, 1); // X
+        ticTacToe.play(2, 1); // O
+        ticTacToe.play(1, 2); // X
+        ticTacToe.play(2, 2); // O
+        ticTacToe.play(2, 3); // X
+        ticTacToe.play(1, 3); // O
+        ticTacToe.play(3, 1); // X
+        ticTacToe.play(3, 2); // O
+
+        assertThat(ticTacToe.play(3, 3)).isEqualTo(PlayResult.DRAW); // All spots have been field, so we have a DRAW
+    }
+
+    @Test
+    public void givenAnEmptyBoard_whenShow_thenIsEquals() {
+        String actualEmptyBoard = ticTacToe.getBoard().show();
+        String expectedEmptyBoard =
+                "   |   |   \n" +
+                        "---|---|---\n" +
+                        "   |   |   \n" +
+                        "---|---|---\n" +
+                        "   |   |   ";
+
+        assertThat(actualEmptyBoard).isEqualTo(expectedEmptyBoard);
+    }
+
+    @Test
+    public void givenABoard_whenShow_thenIsEquals() {
+        ticTacToe.play(1, 1);
+        ticTacToe.play(1, 2);
+        ticTacToe.play(2, 2);
+        ticTacToe.play(1, 3);
+        ticTacToe.play(3, 3);
+
+        String actualBoard = ticTacToe.getBoard().show();
+        String expectedBoard =
+                " X | O | O \n" +
+                        "---|---|---\n" +
+                        "   | X |   \n" +
+                        "---|---|---\n" +
+                        "   |   | X ";
+
+        assertThat(actualBoard).isEqualTo(expectedBoard);
+    }
+
 }
