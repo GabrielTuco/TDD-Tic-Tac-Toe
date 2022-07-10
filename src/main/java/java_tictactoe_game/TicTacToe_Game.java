@@ -10,10 +10,6 @@ import tictactoe.PlayResult;
 import tictactoe.exception.InvalidPositionException;
 import tictactoe.exception.SpotUnavailableException;
 
-/**
- *
- * @author 1bestcsharp.blogspot.com
- */
 public class TicTacToe_Game extends javax.swing.JFrame {
     private HashMap componentMap;
     private char lastPlayer = 'O';
@@ -123,6 +119,7 @@ public class TicTacToe_Game extends javax.swing.JFrame {
         if(!jButton3.getText().equals("") && jButton3.getText().equals(jButton5.getText()) && jButton3.getText().equals(jButton7.getText())){
             winEffect(jButton3, jButton5, jButton7);
             win = true;
+            return PlayResult.WINNER;
         }
         
         else if(allButtonsTextLength() == 9 && win == false){
@@ -133,7 +130,7 @@ public class TicTacToe_Game extends javax.swing.JFrame {
         return PlayResult.NO_WINNER;
     }
     
-    // if no one win
+
     public int allButtonsTextLength(){
         
         String txt = "";
@@ -202,7 +199,7 @@ public class TicTacToe_Game extends javax.swing.JFrame {
     }
     
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+   
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();

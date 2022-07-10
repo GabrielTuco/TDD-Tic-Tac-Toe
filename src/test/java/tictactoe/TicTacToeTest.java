@@ -162,7 +162,7 @@ public class TicTacToeTest {
         ticTacToe.play(3, 1); // X
         ticTacToe.play(3, 2); // O
 
-        assertThat(ticTacToe.play(3, 3)).isEqualTo(PlayResult.DRAW); // All spots have been field, so we have a DRAW
+        assertThat(ticTacToe.play(3, 3)).isEqualTo(PlayResult.DRAW); 
     }
 
 }
