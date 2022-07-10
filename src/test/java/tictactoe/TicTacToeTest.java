@@ -1,5 +1,6 @@
 package tictactoe;
 
+import java_tictactoe_game.TicTacToe_Game;
 import org.junit.Before;
 import org.junit.Test;
 import tictactoe.exception.InvalidGridSizeException;
@@ -10,18 +11,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class TicTacToeTest {
-    private TicTacToe ticTacToe;
+    private TicTacToe_Game ticTacToe;
 
     @Before
     public void setUp() {
-        ticTacToe = new TicTacToe(3);
-    }
-
-    @Test
-    public void givenAnInvalidGridSize_whenNewTicTacToe_thenInvalidGridSizeExceptionIsThrown() {
-        assertThatThrownBy(
-                () -> new TicTacToe(2)
-        ).isInstanceOf(InvalidGridSizeException.class);
+        ticTacToe = new TicTacToe_Game();
+        
+        
+        
     }
 
     @Test
@@ -58,6 +55,114 @@ public class TicTacToeTest {
         ticTacToe.play(2, 2); // O
 
         assertThat(ticTacToe.nextPlayer()).isEqualTo('X');
+    }
+    
+    @Test
+    public void givenACertainMoves_whenPlay_thenNoWinners() {
+        assertThat(ticTacToe.play(1, 1)).isEqualTo(PlayResult.NO_WINNER); // X is NOT the WINNER
+        assertThat(ticTacToe.play(1, 2)).isEqualTo(PlayResult.NO_WINNER); // O is NOT the WINNER
+        assertThat(ticTacToe.play(2, 1)).isEqualTo(PlayResult.NO_WINNER); // X is NOT the WINNER
+        assertThat(ticTacToe.play(2, 2)).isEqualTo(PlayResult.NO_WINNER); // O is NOT the WINNER
+        assertThat(ticTacToe.play(3, 3)).isEqualTo(PlayResult.NO_WINNER); // X is NOT the WINNER
+        assertThat(ticTacToe.play(3, 1)).isEqualTo(PlayResult.NO_WINNER); // O is NOT the WINNER
+    }
+
+    @Test
+    public void givenXHasPlayedAllHorizontalLines_whenPlay_thenPlayerXIsTheWinner() {
+        ticTacToe.play(3, 1); // X
+        ticTacToe.play(2, 1); // O
+        ticTacToe.play(3, 2); // X
+        ticTacToe.play(2, 2); // O
+
+        assertThat(ticTacToe.play(3, 3)).isEqualTo(PlayResult.WINNER); // X is the WINNER
+    }
+
+    @Test
+    public void givenOHasPlayedAllHorizontalLines_whenPlay_thenPlayerOIsTheWinner() {
+        ticTacToe.play(1, 1); // X
+        ticTacToe.play(1, 2); // O
+        ticTacToe.play(2, 3); // X
+        ticTacToe.play(2, 2); // O
+        ticTacToe.play(3, 3); // X
+
+        assertThat(ticTacToe.play(3, 2)).isEqualTo(PlayResult.WINNER); // O is the WINNER
+    }
+
+    @Test
+    public void givenXHasPlayedAllVerticalLines_whenPlay_thenPlayerXIsTheWinner() {
+        ticTacToe.play(1, 1); // X
+        ticTacToe.play(1, 3); // O
+        ticTacToe.play(2, 1); // X
+        ticTacToe.play(2, 3); // O
+
+        assertThat(ticTacToe.play(3, 1)).isEqualTo(PlayResult.WINNER); // X is the WINNER
+    }
+
+    @Test
+    public void givenOHasPlayedAllVerticalLines_whenPlay_thenPlayerOIsTheWinner() {
+        ticTacToe.play(1, 1); // X
+        ticTacToe.play(1, 2); // O
+        ticTacToe.play(2, 1); // X
+        ticTacToe.play(2, 2); // O
+        ticTacToe.play(1, 3); // X
+
+        assertThat(ticTacToe.play(3, 2)).isEqualTo(PlayResult.WINNER); // O is the WINNER
+    }
+
+    @Test
+    public void givenXHasPlayedFromTopLeftToBottomRight_whenPlay_thenPlayerXIsTheWinner() {
+        ticTacToe.play(1, 1); // X
+        ticTacToe.play(1, 2); // O
+        ticTacToe.play(2, 2); // X
+        ticTacToe.play(2, 3); // O
+
+        assertThat(ticTacToe.play(3, 3)).isEqualTo(PlayResult.WINNER); // X is the WINNER
+    }
+
+    @Test
+    public void givenOHasPlayedFromTopLeftToBottomRight_whenPlay_thenPlayerOIsTheWinner() {
+        ticTacToe.play(1, 2); // X
+        ticTacToe.play(1, 1); // O
+        ticTacToe.play(2, 1); // X
+        ticTacToe.play(2, 2); // O
+        ticTacToe.play(3, 2); // X
+
+        assertThat(ticTacToe.play(3, 3)).isEqualTo(PlayResult.WINNER); // O is the WINNER
+    }
+
+    @Test
+    public void givenXHasPlayedFromBottomLeftToTopRight_whenPlay_thenPlayerXIsTheWinner() {
+        ticTacToe.play(1, 3); // X
+        ticTacToe.play(1, 1); // O
+        ticTacToe.play(2, 2); // X
+        ticTacToe.play(2, 1); // O
+
+        assertThat(ticTacToe.play(3, 1)).isEqualTo(PlayResult.WINNER); // X is the WINNER
+    }
+
+    @Test
+    public void givenOHasPlayedFromBottomLeftToTopRight_whenPlay_thenPlayerOIsTheWinner() {
+        ticTacToe.play(1, 1); // X
+        ticTacToe.play(1, 3); // O
+        ticTacToe.play(2, 1); // X
+        ticTacToe.play(2, 2); // O
+        ticTacToe.play(3, 2); // X
+
+        assertThat(ticTacToe.play(3, 1)).isEqualTo(PlayResult.WINNER); // O is the WINNER
+    }
+
+    @Test
+    public void givenAllSpotsAreFilled_whenPlay_thenTheResultIsDraw() {
+        ticTacToe.play(1, 1); // X
+        ticTacToe.play(2, 1); // O
+        ticTacToe.play(1, 2); // X
+        ticTacToe.play(2, 2); // O
+        ticTacToe.play(2, 3); // X
+        ticTacToe.play(1, 3); // O
+        ticTacToe.play(3, 1); // X
+        ticTacToe.play(3, 2); // O
+
+        assertThat(ticTacToe.play(3, 3)).isEqualTo(PlayResult.DRAW); // All spots have been field, so we have a DRAW
     }
 
 }
